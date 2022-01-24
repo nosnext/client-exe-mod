@@ -71,6 +71,9 @@ if (!$result["success"]) {
     exit();
 }
 
+WinPEUtils::SetIconResource($winpe, $data, file_get_contents("nostropia.ico"));
+$result = $winpe->SavePEResourcesDirectory($data);
+
 file_put_contents("origIcon.ico", $result["data"]);
 
 // Write out the modified executable.

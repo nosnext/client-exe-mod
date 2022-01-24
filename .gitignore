@@ -3,5 +3,5 @@
 PEview.exe
 nosghidra*
 *.exe
-*.ico
+origIcon.ico
 vendor
