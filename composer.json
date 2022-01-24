@@ -1,0 +1,19 @@
+{
+    "name": "nostropia/client-mod",
+    "description": "Client Executable modification software written in php for staticly compiling hooks and exe patches.",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Nostropia\\ClientMod\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "deadphoenix8091",
+            "email": "schnitzlerstefan@protonmail.com"
+        }
+    ],
+    "require": {
+        "thefox/assembly": "^0.2.0"
+    }
+}

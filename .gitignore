@@ -1,0 +1,7 @@
+/artifacts
+/extracts
+PEview.exe
+nosghidra*
+*.exe
+*.ico
+vendor
