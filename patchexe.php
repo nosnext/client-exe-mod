@@ -124,27 +124,27 @@ $compiledAssembly = buildLoadLibraryShellcode($imageBaseAddr, $entryPointAddr, 0
 
 writeLog("Info", "Writing assembly to PE File.");
 
-//$libraryName = "nostropia.dll\00";
-//$section = $winpe->CreateNewPESection($data, ".nostropia", 0, WinPEFile::IMAGE_SCN_MEM_EXECUTE | WinPEFile::IMAGE_SCN_MEM_READ);
+$libraryName = "nostropia.dll\00";
+$section = $winpe->CreateNewPESection($data, ".nostropia", 0, WinPEFile::IMAGE_SCN_MEM_EXECUTE | WinPEFile::IMAGE_SCN_MEM_READ);
 
-//$result = $winpe->ExpandLastPESection($data, strlen($compiledAssembly) + strlen($libraryName));
-//$compiledAssembly = $libraryName;
-//$compiledAssembly .= buildLoadLibraryShellcode($imageBaseAddr, $entryPointAddr, $imageBaseAddr + $section['info']['rva'], 0x407c80 /* Load Library Thrunk function pointer */);
+$result = $winpe->ExpandLastPESection($data, strlen($compiledAssembly) + strlen($libraryName));
+$compiledAssembly = $libraryName;
+$compiledAssembly .= buildLoadLibraryShellcode($imageBaseAddr, $entryPointAddr, $imageBaseAddr + $section['info']['rva'], 0x407c80 /* Load Library Thrunk function pointer */);
 
-//writeLog("Info", "Compiled assembly \"" . unpack('H*', $compiledAssembly)[1] . "\".");
+writeLog("Info", "Compiled assembly \"" . unpack('H*', $compiledAssembly)[1] . "\".");
 
-//if ($result['success'] !== true) {
-//    writeLog("Info", "Unable to add assembly to pe section.");
-//    exit();
-//}
+if ($result['success'] !== true) {
+    writeLog("Info", "Unable to add assembly to pe section.");
+    exit();
+}
 
-//writeLog("Info", "Writing assembly to PE File at 0x" . dechex($result['pos']) . ".");
-//$winpe->pe_opt_header['entry_point_addr'] = $section['info']['rva'] + strlen($libraryName);
-//writeLog("Info", "Patching entry point to load our dll at 0x" . dechex($winpe->pe_opt_header["entry_point_addr"]) . ".");
+writeLog("Info", "Writing assembly to PE File at 0x" . dechex($result['pos']) . ".");
+$winpe->pe_opt_header['entry_point_addr'] = $section['info']['rva'] + strlen($libraryName);
+writeLog("Info", "Patching entry point to load our dll at 0x" . dechex($winpe->pe_opt_header["entry_point_addr"]) . ".");
 //copy over compiled assembly to position
-//for ($i = 0; $i < strlen($compiledAssembly); $i++) {
-//    $data[$result['pos'] + $i] = $compiledAssembly[$i];
-//}
+for ($i = 0; $i < strlen($compiledAssembly); $i++) {
+    $data[$result['pos'] + $i] = $compiledAssembly[$i];
+}
 
 $winpe->SaveHeaders($data);
 
